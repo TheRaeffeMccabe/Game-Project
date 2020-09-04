@@ -32,6 +32,10 @@
         const UP_KEY = 38
         const RIGHT_KEY = 39;
         const DOWN_KEY = 40;
+        
+         var balls = [];
+        var settingUp = true;
+        var totalballs = 1;
 
 
         function mainloop() {
@@ -41,7 +45,107 @@
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'gray');
 
             playerMove();
+
+            if (settingUp) {
+                for (var i = 0; i < totalballs; i++) {
+                    setUp();
+
+
+
+                }
+
+                settingUp = true;
+            }
+            drawballs();
+            moveballs();
+            ballMove();
+
         }
+
+        function setUp() {
+            var ballSize = Math.floor(Math.random() * (50 - 10)) + 10;
+            var ballXpos = Math.floor(Math.random() * ((canvas.width - ballSize) - 0)) + 0;
+            var ballYpos = Math.floor(Math.random() * ((canvas.height - ballSize) - 0)) + 0;
+            var ballXspeed = Math.floor(Math.random() * (20 - 2)) + 2;
+            var ballYspeed = Math.floor(Math.random() * (20 - 2)) + 2;
+
+            var ball = {
+                ballXpos: ballXpos,
+                ballYpos: ballYpos,
+                ballSize: ballSize,
+                ballXspeed: ballXspeed,
+                ballYspeed: ballYspeed,
+            }
+
+            balls.push(ball);
+
+        } // end func 
+
+        function drawballs() {
+            balls.forEach(function(ball, i) {
+                colorRect(ball.ballXpos, ball.ballYpos, ball.ballSize, ball.ballSize, 'steel');
+            });
+
+        }
+
+        function moveballs() {
+            balls.forEach(function(ball, i) {
+                ball.ballXpos += ball.ballXspeed; // move x
+                ball.ballypos += ball.ballyspeed; // move y
+
+                if (ball.ballXpos + ball.ballSize > canvas.width) {
+                    ball.ballXspeed *= -1;
+                }
+                //                if(ball.ballXpos < 0){
+                //                    ball.ballXspeed *= -1;
+                //}
+                //Right edge bounce
+                if (ball.ballXpos + ball.ballSize > canvas.width) {
+                    ball.ballXspeed *= -1;
+
+                }
+
+                //Left Edge Bounce
+                if (ball.ballXpos < 0) {
+                    ball.ballXspeed *= -1;
+                }
+
+                if (ball.ballYpos > canvas.height) {
+                    ball.ballYpos = 0 - ball.ballSize;
+                    ball.ballSize = Math.floor(Math.random() * (100 - 67)) + 10;
+                    ball.ballYspeed = Math.floor(Math.random() * (20 - 2)) + 2;
+                    ball.ballXspeed = Math.floor(Math.random() * (20 - 2)) + 2;
+
+                }
+
+            });
+        }
+
+
+
+
+
+        function ballMove() {
+            xPos += xSpeed; // x move
+            yPos += ySpeed; // y move
+
+            // right edge bounce
+            if (xPos > canvas.width - SIZE) {
+                xSpeed *= -1;
+            }
+            // left edge bounce
+            if (xPos < 0) {
+                xSpeed *= -1;
+            }
+            // bottom edge bounce
+            if (yPos > canvas.height - SIZE) {
+                ySpeed *= -1;
+            }
+            // top edge bounce 
+            if (yPos < 0) {
+                ySpeed *= -1;
+            }
+        } // end func 
 
         function playerMove() {
             xPos += xSpeed;
