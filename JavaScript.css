@@ -1,0 +1,14 @@
+body {
+    background-image: url('Background%2520Images/NightGround.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+
+
+button {
+    height: 100px;
+    width: 100px;
+    margin: 1px;
+}
