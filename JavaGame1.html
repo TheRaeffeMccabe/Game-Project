@@ -1,7 +1,11 @@
 <!doctype html>
 
 <body>
-    <canvas id="gameCanvas" width="1900" height="950"></canvas>
+
+    <canvas id="gameCanvas" width="3000" height="900"></canvas>
+
+
+
     <script>
         var canvas, canvasContext;
 
@@ -16,12 +20,20 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-        // player Vars
+
+
         var playerXpos = 100;
         var playerYpos = 0;
-        const PLAYER_SIZE = 20;
+        const PLAYER_SIZE = 100;
         var playerXspeed = 5;
         var playerYspeed = 5;
+        var backgroundwidth = 1000;
+        var backgroundheight = 1000;
+        var background = new Image();
+        background.src = 'Background Images/City.jpg';
+
+        var player = new Image();
+        player.src = 'images/Heart.jpg';
 
         var leftKeyPressed = false;
         var rightKeyPressed = false;
@@ -32,120 +44,28 @@
         const UP_KEY = 38
         const RIGHT_KEY = 39;
         const DOWN_KEY = 40;
-        
-         var balls = [];
-        var settingUp = true;
-        var totalballs = 1;
+
 
 
         function mainloop() {
-            colorRect(0, 0, canvas.width, canvas.height, '#7FFFD4');
+            colorRect(0, 0, canvas.width, canvas.height, 'white');
             colorRect(0, 800, canvas.width, canvas.height, '#643024');
+            drawImgs(background,0,0, backgroundwidth, backgroundheight);
+            drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
+            
+            
+        
+        
 
-            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'gray');
-
-            playerMove();
-
-            if (settingUp) {
-                for (var i = 0; i < totalballs; i++) {
-                    setUp();
-
-
-
-                }
-
-                settingUp = true;
-            }
-            drawballs();
-            moveballs();
-            ballMove();
-
-        }
-
-        function setUp() {
-            var ballSize = Math.floor(Math.random() * (50 - 10)) + 10;
-            var ballXpos = Math.floor(Math.random() * ((canvas.width - ballSize) - 0)) + 0;
-            var ballYpos = Math.floor(Math.random() * ((canvas.height - ballSize) - 0)) + 0;
-            var ballXspeed = Math.floor(Math.random() * (20 - 2)) + 2;
-            var ballYspeed = Math.floor(Math.random() * (20 - 2)) + 2;
-
-            var ball = {
-                ballXpos: ballXpos,
-                ballYpos: ballYpos,
-                ballSize: ballSize,
-                ballXspeed: ballXspeed,
-                ballYspeed: ballYspeed,
-            }
-
-            balls.push(ball);
-
-        } // end func 
-
-        function drawballs() {
-            balls.forEach(function(ball, i) {
-                colorRect(ball.ballXpos, ball.ballYpos, ball.ballSize, ball.ballSize, 'steel');
-            });
-
-        }
-
-        function moveballs() {
-            balls.forEach(function(ball, i) {
-                ball.ballXpos += ball.ballXspeed; // move x
-                ball.ballypos += ball.ballyspeed; // move y
-
-                if (ball.ballXpos + ball.ballSize > canvas.width) {
-                    ball.ballXspeed *= -1;
-                }
-                //                if(ball.ballXpos < 0){
-                //                    ball.ballXspeed *= -1;
-                //}
-                //Right edge bounce
-                if (ball.ballXpos + ball.ballSize > canvas.width) {
-                    ball.ballXspeed *= -1;
-
-                }
-
-                //Left Edge Bounce
-                if (ball.ballXpos < 0) {
-                    ball.ballXspeed *= -1;
-                }
-
-                if (ball.ballYpos > canvas.height) {
-                    ball.ballYpos = 0 - ball.ballSize;
-                    ball.ballSize = Math.floor(Math.random() * (100 - 67)) + 10;
-                    ball.ballYspeed = Math.floor(Math.random() * (20 - 2)) + 2;
-                    ball.ballXspeed = Math.floor(Math.random() * (20 - 2)) + 2;
-
-                }
-
-            });
+        
         }
 
 
 
 
 
-        function ballMove() {
-            xPos += xSpeed; // x move
-            yPos += ySpeed; // y move
 
-            // right edge bounce
-            if (xPos > canvas.width - SIZE) {
-                xSpeed *= -1;
-            }
-            // left edge bounce
-            if (xPos < 0) {
-                xSpeed *= -1;
-            }
-            // bottom edge bounce
-            if (yPos > canvas.height - SIZE) {
-                ySpeed *= -1;
-            }
-            // top edge bounce 
-            if (yPos < 0) {
-                ySpeed *= -1;
-            }
-        } // end func 
+
 
         function playerMove() {
             xPos += xSpeed;
@@ -180,54 +100,60 @@
                 playerXpos += playerXspeed;
             }
             if (rightKeyPressed == true) {
-                playerXpos += playerXspeed; // Auto Moving
+                playerXpos += playerXspeed;
             }
             if (leftKeyPressed == true) {
-                playerXpos -= playerXspeed; // Auto Moving
+                playerXpos -= playerXspeed;
             }
             if (upKeyPressed == true) {
-                playerYpos -= playerYspeed; // Auto Moving
+                playerYpos -= playerYspeed;
             }
             if (downKeyPressed == true) {
-                playerYpos += playerYspeed; // Auto Moving
+                playerYpos += playerYspeed;
             }
 
 
         }
 
         function keyPressed(evt) {
-            if (evt.keyCode == LEFT_KEY) { //left
+            if (evt.keyCode == LEFT_KEY) {
                 leftKeyPressed = true;
             }
-            if (evt.keyCode == RIGHT_KEY) { //right
+            if (evt.keyCode == RIGHT_KEY) {
                 rightKeyPressed = true;
             }
-            if (evt.keyCode == UP_KEY) { //up
+            if (evt.keyCode == UP_KEY) {
                 upKeyPressed = true;
             }
-            if (evt.keyCode == DOWN_KEY) { //down
+            if (evt.keyCode == DOWN_KEY) {
                 downKeyPressed = true;
             }
 
         }
 
         function keyReleased(evt) {
-            if (evt.keyCode == LEFT_KEY) { //left
+            if (evt.keyCode == LEFT_KEY) {
                 leftKeyPressed = false;
             }
-            if (evt.keyCode == RIGHT_KEY) { //right
+            if (evt.keyCode == RIGHT_KEY) {
                 rightKeyPressed = false;
             }
-            if (evt.keyCode == UP_KEY) { //up
+            if (evt.keyCode == UP_KEY) {
                 upKeyPressed = false;
             }
-            if (evt.keyCode == DOWN_KEY) { //down
+            if (evt.keyCode == DOWN_KEY) {
                 downKeyPressed = false;
             }
 
         }
 
 
+//        function drawImgs(scr, w, h){
+//            canvasContext.drawImage(src, w, h);
+//        }
+        function drawImgs(src, x, y, w, h) {
+            canvasContext.drawImage(src, x, y, w, h);
+        }
 
 
         function colorRect(x, y, w, h, c) {
