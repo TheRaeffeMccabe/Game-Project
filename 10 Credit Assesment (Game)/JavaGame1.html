@@ -24,16 +24,16 @@
 
         var playerXpos = 100;
         var playerYpos = 0;
-        const PLAYER_SIZE = 20;
+        const PLAYER_SIZE = 100;
         var playerXspeed = 5;
         var playerYspeed = 5;
-        var backgroundwidth = 50;
-        var backgroundheight = 50;
+        var backgroundwidth = 1515;
+        var backgroundheight = 800;
         var background = new Image();
-        background.src = 'Background Images/Space.JPEG';
+        background.src = 'Background Images/City.jpg';
 
         var player = new Image();
-        player.src = 'images/Heart.jpg';
+        player.src = 'Player/Ricardio_the_Heart_Guy.png';
 
         var leftKeyPressed = false;
         var rightKeyPressed = false;
@@ -49,12 +49,15 @@
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'white');
-            colorRect(0, 800, canvas.width, canvas.height, '#643024');
+            colorRect(0, 800, canvas.width, canvas.height, 'gray');
+            drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
             drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
 
-        
 
-        playerMove();
+
+
+
+
         }
 
 
@@ -145,7 +148,9 @@
         }
 
 
-
+        //        function drawImgs(scr, w, h){
+        //            canvasContext.drawImage(src, w, h);
+        //        }
         function drawImgs(src, x, y, w, h) {
             canvasContext.drawImage(src, x, y, w, h);
         }
