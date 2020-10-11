@@ -27,6 +27,8 @@
         var playerXpos = 100;
         var playerYpos = 0;
         const PLAYER_SIZE = 100;
+        var yVel = .5;
+        var yJumpPower = -7;
         var playerXspeed = 5;
         var playerYspeed = 5;
         var backgroundwidth = 5000;
@@ -97,6 +99,8 @@
 
 
         function playerMove() {
+            playerYpos += playerYspeed; 
+            playerYspeed += yVel;
             if (rightKeyPressed && playerXpos + PLAYER_SIZE < canvas.width) {
                 playerXpos += playerXspeed;
             }
@@ -107,7 +111,7 @@
                 playerXpos -= playerXspeed;
             }
             if (upKeyPressed == true) {
-                playerYpos -= playerYspeed;
+                playerYspeed = yJumpPower;
             }
             if (downKeyPressed == true) {
                 playerYpos += playerYspeed;
