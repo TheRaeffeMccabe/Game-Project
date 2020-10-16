@@ -2,7 +2,7 @@
 
 <body>
 
-    <canvas id="gameCanvas" width="1500s" height="900"></canvas>
+    <canvas id="gameCanvas" width="1880" height="950"></canvas>
 
 
 
@@ -21,7 +21,10 @@
         }
 
 
-
+        var obstacle = new Image();
+        obstacle.src = 'Images/1001519925.jpg'
+        var obstaclewidth = 100;
+        var obstacleheight = 100;
         var player = new Image();
         player.src = 'Player/Ricardio_the_Heart_Guy.png';
         var playerXpos = 100;
@@ -31,8 +34,8 @@
         var yJumpPower = -7;
         var playerXspeed = 5;
         var playerYspeed = 5;
-        var backgroundwidth = 5000;
-        var backgroundheight = 800;
+        var backgroundwidth = 2000;
+        var backgroundheight = 900;
         var background = new Image();
         background.src = 'Background Images/City.jpg';
 
@@ -48,17 +51,22 @@
         const RIGHT_KEY = 39;
         const DOWN_KEY = 40;
 
-
+        var objXpos = 700;
+        var objYpos = 440;
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'white');
-            colorRect(0, 800, canvas.width, canvas.height, 'gray');
             drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
             drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
+            drawImgs(obstacle, objXpos, objYpos, obstaclewidth, obstacleheight);
+            drawImgs(obstacle, 350, 700, obstaclewidth, obstacleheight);
+            drawImgs(obstacle, 500, 550, obstaclewidth, obstacleheight);
+            drawImgs(obstacle, 244, 200, obstaclewidth, obstacleheight);
 
 
             playerMove();
 
+            
 
 
         }
@@ -70,27 +78,43 @@
 
 
 
-//        function playerMove() {
-//            playerXpos += playerXspeed;
-//
-//
-//            if (playerXpos > canvas.width - PLAYER_SIZE) {
-//                playerXspeed *= -1;
-//            }
-//
-//            if (playerXpos < 0) {
-//                playerXspeed *= -1;
-//            }
-//
-//            if (playerYpos > canvas.height - PLAYER_SIZE) {
-//                playerYspeed *= -1;
-//            }
-//
-//            if (playerYpos < 0) {
-//                playerYspeed *= -1;
-//            }
-//        }
+        //        function playerMove() {
+        //            playerXpos += playerXspeed;
+        //
+        //
+        //            if (playerXpos > canvas.width - PLAYER_SIZE) {
+        //                playerXspeed *= -1;
+        //            }
+        //
+        //            if (playerXpos < 0) {
+        //                playerXspeed *= -1;
+        //            }
+        //
+        //            if (playerYpos > canvas.height - PLAYER_SIZE) {
+        //                playerYspeed *= -1;
+        //            }
+        //
+        //            if (playerYpos < 0) {
+        //                playerYspeed *= -1;
+        //            }
+        //        }
 
+        var falling = true;
+        
+        function playerCollision() {
+            if (playerYpos + PLAYER_SIZE > objYpos && playerYpos < objYpos + obstacleheight && playerXpos + PLAYER_SIZE > objXpos && playerXpos < objXpos + obstaclewidth) {
+                falling = false;
+                
+                if(playerYpos > objYpos + obstacleheight * 0.75){
+                   playerYpos += 10;
+                }
+                
+                console.log('landed')
+            } else {
+                falling = true;
+            }
+
+        }
 
 
 
@@ -99,8 +123,10 @@
 
 
         function playerMove() {
-            playerYpos += playerYspeed; 
-            playerYspeed += yVel;
+            if(falling){
+                playerYpos += playerYspeed;
+                playerYspeed += yVel;
+            }
             if (rightKeyPressed && playerXpos + PLAYER_SIZE < canvas.width) {
                 playerXpos += playerXspeed;
             }
@@ -117,7 +143,7 @@
                 playerYpos += playerYspeed;
             }
 
-
+            playerCollision();
         }
 
         function keyPressed(evt) {
