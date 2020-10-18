@@ -66,7 +66,7 @@
 
             playerMove();
 
-            
+
 
 
         }
@@ -78,39 +78,32 @@
 
 
 
-        //        function playerMove() {
-        //            playerXpos += playerXspeed;
-        //
-        //
-        //            if (playerXpos > canvas.width - PLAYER_SIZE) {
-        //                playerXspeed *= -1;
-        //            }
-        //
-        //            if (playerXpos < 0) {
-        //                playerXspeed *= -1;
-        //            }
-        //
-        //            if (playerYpos > canvas.height - PLAYER_SIZE) {
-        //                playerYspeed *= -1;
-        //            }
-        //
-        //            if (playerYpos < 0) {
-        //                playerYspeed *= -1;
-        //            }
-        //        }
 
         var falling = true;
-        
+
         function playerCollision() {
             if (playerYpos + PLAYER_SIZE > objYpos && playerYpos < objYpos + obstacleheight && playerXpos + PLAYER_SIZE > objXpos && playerXpos < objXpos + obstaclewidth) {
                 falling = false;
-                
-                if(playerYpos > objYpos + obstacleheight * 0.75){
-                   playerYpos += 10;
+
+                if (playerYpos > objYpos + obstacleheight * 0.75) {
+                    playerYpos += 10;
                 }
-                
+                if (playerXpos > objXpos + obstaclewidth * 0.75){
+                    playerXpos += 10;
+                } // right edge box hit
+                if (playerXpos < objXpos  - obstaclewidth * 0.25){
+                    playerXpos -= 10;
+                } // right edge box hit
+
+
+
+
                 console.log('landed')
-            } else {
+            }
+            
+
+
+            else {
                 falling = true;
             }
 
@@ -123,7 +116,7 @@
 
 
         function playerMove() {
-            if(falling){
+            if (falling) {
                 playerYpos += playerYspeed;
                 playerYspeed += yVel;
             }
