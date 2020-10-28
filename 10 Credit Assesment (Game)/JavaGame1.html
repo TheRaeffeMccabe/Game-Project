@@ -21,11 +21,9 @@
         }
 
 
-        var obstacle = new Image();
-        obstacle.src = 'Images/1001519925.jpg'
+        // player Vars
         var player = new Image();
         player.src = 'Player/Ricardio_the_Heart_Guy.png';
-        
         var playerXpos = 100;
         var playerYpos = 0;
         const PLAYER_SIZE = 100;
@@ -39,21 +37,23 @@
         background.src = 'Background Images/City.jpg';
 
 
-
+        // Control Vars
         var leftKeyPressed = false;
         var rightKeyPressed = false;
         var upKeyPressed = false;
         var downKeyPressed = false;
-
         const LEFT_KEY = 37;
         const UP_KEY = 38
         const RIGHT_KEY = 39;
         const DOWN_KEY = 40;
+
+        //Object Vars
+        var obstacle = new Image();
+        obstacle.src = 'Images/1001519925.jpg'
         var obstacleheight = 100;
         var obstaclewidth = 100;
         var objXpos = 700;
         var objYpos = 440;
-
         var objects = [];
         var settingUp = true;
         var Totalobjects = 15;
@@ -64,53 +64,62 @@
             drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
             drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
             drawImgs(obstacle, objXpos, objYpos, obstaclewidth, obstacleheight);
-            drawImgs(obstacle, 350, 700, obstaclewidth, obstacleheight);
-            drawImgs(obstacle, 500, 550, obstaclewidth, obstacleheight);
-            drawImgs(obstacle, 244, 200, obstaclewidth, obstacleheight);
+
 
 
             playerMove();
+            playerCollision();
 
 
 
-            Drawobjects();
+//            Drawobjects();
         }
-        
+
+
+        // Object Collision
         var falling = true;
 
         function playerCollision() {
             if (playerYpos + PLAYER_SIZE > objYpos && playerYpos < objYpos + obstacleheight && playerXpos + PLAYER_SIZE > objXpos && playerXpos < objXpos + obstaclewidth) {
                 falling = false;
-
-                if (playerYpos > objYpos + obstacleheight * 0.75) {
-                    playerYpos += 10;
-                }
+                
+                if (playerYpos + PLAYER_SIZE > objYpos) {
+                    playerYpos -= playerYspeed;
+                    falling = false;
+                } // Top Edge bix hit
+                if (playerYpos < objYpos + obstacleheight && playerYpos + PLAYER_SIZE > objYpos) {
+                    playerYpos += playerXspeed*2;
+                    falling = true;
+                } // Bottem edge box hit
                 if (playerXpos > objXpos + obstaclewidth * 0.75) {
-                    playerXpos += 10;
+                    playerXpos += playerXspeed*2;
+                    falling = true;
                 } // right edge box hit
-                if (playerXpos < objXpos - obstaclewidth * 0.25) {
-                    playerXpos -= 10;
+                if (playerXpos < objXpos - obstaclewidth * 0.75) {
+                    playerXpos -= playerXspeed*2;
+                    falling = true;
                 } // right edge box hit
+                    
 
 
 
-
-                console.log('landed')
+//                console.log('landed')
             } else {
                 falling = true;
             }
 
-        }
-
+        } // End Func
+        
+        // UserName/Difficulty
         var userName = '';
 
-        while (userName == '' || username == null) {
+        while (userName == '' || userName == null) {
             userName = prompt('What is you name?');
         }
 
         var difficulty = '';
-        while(difficulty == 'easy' || difficulty == null){
-              difficulty = prompt('How hard?', 'Easy');
+        while (difficulty == 'easy' || difficulty == null) {
+            difficulty = prompt('How hard?', 'Easy');
         }
 
         difficulty = Number(difficulty) //makes it number
@@ -121,17 +130,17 @@
         } else {
             gameSpeed = 100;
         }
-        
-        
+
+
         function death() {
-            if (PLAYER_SIZE < Canvas.height){
-                
-                
+            if (PLAYER_SIZE < Canvas.height) {
+
+
             }
-        }
-        
-        
-        
+        } // End Func
+
+
+
 
 
 
@@ -141,6 +150,8 @@
             if (falling) {
                 playerYpos += playerYspeed;
                 playerYspeed += yVel;
+            } else {
+                playerYspeed = 0;
             }
             if (rightKeyPressed && playerXpos + PLAYER_SIZE < canvas.width) {
                 playerXpos += playerXspeed;
@@ -158,8 +169,7 @@
                 playerYpos += playerYspeed;
             }
 
-            playerCollision();
-        }
+        } //End Func
 
         function keyPressed(evt) { //Controls
             if (evt.keyCode == LEFT_KEY) {
@@ -175,7 +185,7 @@
                 downKeyPressed = true;
             }
 
-        }
+        } //End Func
 
         function keyReleased(evt) { //ControlsS
             if (evt.keyCode == LEFT_KEY) {
@@ -191,21 +201,21 @@
                 downKeyPressed = false;
             }
 
-        }
-       
-        
-       
+        } //End Func
+
+
+
 
 
         function drawImgs(src, x, y, w, h) {
             canvasContext.drawImage(src, x, y, w, h);
-        }
+        } //End Func
 
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
-        }
+        } //End Func
 
     </script>
 </body>
