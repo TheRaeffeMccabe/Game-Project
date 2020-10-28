@@ -25,6 +25,7 @@
         obstacle.src = 'Images/1001519925.jpg'
         var player = new Image();
         player.src = 'Player/Ricardio_the_Heart_Guy.png';
+        
         var playerXpos = 100;
         var playerYpos = 0;
         const PLAYER_SIZE = 100;
@@ -48,7 +49,8 @@
         const UP_KEY = 38
         const RIGHT_KEY = 39;
         const DOWN_KEY = 40;
-
+        var obstacleheight = 100;
+        var obstaclewidth = 100;
         var objXpos = 700;
         var objYpos = 440;
 
@@ -73,6 +75,7 @@
 
             Drawobjects();
         }
+        
         var falling = true;
 
         function playerCollision() {
@@ -106,7 +109,7 @@
         }
 
         var difficulty = '';
-        while(difficulty != 'easy' || difficulty == null){
+        while(difficulty == 'easy' || difficulty == null){
               difficulty = prompt('How hard?', 'Easy');
         }
 
