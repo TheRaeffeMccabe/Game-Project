@@ -41,11 +41,32 @@
         var leftKeyPressed = false;
         var rightKeyPressed = false;
         var upKeyPressed = false;
-        var downKeyPressed = false;
+
         const LEFT_KEY = 37;
         const UP_KEY = 38
         const RIGHT_KEY = 39;
-        const DOWN_KEY = 40;
+
+
+
+
+        function mainloop() {
+
+            colorRect(0, 0, canvas.width, canvas.height, 'white');
+            drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
+            drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
+            drawImgs(obstacle, objXpos, objYpos, obstaclewidth, obstacleheight);
+
+
+
+            playerMove();
+
+            playerCollision();
+
+            DrawObjects();
+
+
+
+        }
 
         //Object Vars
         var obstacle = new Image();
@@ -58,22 +79,17 @@
         var settingUp = true;
         var Totalobjects = 15;
 
-        function mainloop() {
-
-            colorRect(0, 0, canvas.width, canvas.height, 'white');
-            drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
-            drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
-            drawImgs(obstacle, objXpos, objYpos, obstaclewidth, obstacleheight);
-
-
-
-            playerMove();
-            playerCollision();
+        //Array of Objects
+        function MakeObjects() {
+            var objPos = Math.floor(math.random() * 3) + 1;
+            var objXpos = Math.floor(Math.random() * (canvas.width - obstacleheight && obstaclewidth));
+            var objYpos = Math.floor(math.random() * (vanvas.height - obstacleheight && obstaclewidth));
 
 
 
-//            Drawobjects();
         }
+
+
 
 
         // Object Collision
@@ -82,34 +98,34 @@
         function playerCollision() {
             if (playerYpos + PLAYER_SIZE > objYpos && playerYpos < objYpos + obstacleheight && playerXpos + PLAYER_SIZE > objXpos && playerXpos < objXpos + obstaclewidth) {
                 falling = false;
-                
+
                 if (playerYpos + PLAYER_SIZE > objYpos) {
                     playerYpos -= playerYspeed;
                     falling = false;
                 } // Top Edge bix hit
+
                 if (playerYpos < objYpos + obstacleheight && playerYpos + PLAYER_SIZE > objYpos) {
-                    playerYpos += playerXspeed*2;
+                    playerYpos += playerXspeed * 2;
                     falling = true;
                 } // Bottem edge box hit
+
                 if (playerXpos > objXpos + obstaclewidth * 0.75) {
-                    playerXpos += playerXspeed*2;
+                    playerXpos += playerXspeed * 2;
                     falling = true;
                 } // right edge box hit
+
                 if (playerXpos < objXpos - obstaclewidth * 0.75) {
-                    playerXpos -= playerXspeed*2;
+                    playerXpos -= playerXspeed * 2;
                     falling = true;
                 } // right edge box hit
-                    
 
 
-
-//                console.log('landed')
             } else {
                 falling = true;
             }
 
         } // End Func
-        
+
         // UserName/Difficulty
         var userName = '';
 
@@ -130,14 +146,6 @@
         } else {
             gameSpeed = 100;
         }
-
-
-        function death() {
-            if (PLAYER_SIZE < Canvas.height) {
-
-
-            }
-        } // End Func
 
 
 
@@ -165,9 +173,7 @@
             if (upKeyPressed == true) {
                 playerYspeed = yJumpPower;
             }
-            if (downKeyPressed == true) {
-                playerYpos += playerYspeed;
-            }
+
 
         } //End Func
 
@@ -181,9 +187,7 @@
             if (evt.keyCode == UP_KEY) {
                 upKeyPressed = true;
             }
-            if (evt.keyCode == DOWN_KEY) {
-                downKeyPressed = true;
-            }
+
 
         } //End Func
 
@@ -197,9 +201,7 @@
             if (evt.keyCode == UP_KEY) {
                 upKeyPressed = false;
             }
-            if (evt.keyCode == DOWN_KEY) {
-                downKeyPressed = false;
-            }
+
 
         } //End Func
 
