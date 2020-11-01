@@ -45,12 +45,13 @@
         const LEFT_KEY = 37;
         const UP_KEY = 38
         const RIGHT_KEY = 39;
+        var gameRun = true;
 
 
 
 
         function mainloop() {
-
+            if(gameRun){
             colorRect(0, 0, canvas.width, canvas.height, 'white');
             drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
             drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
@@ -62,11 +63,18 @@
 
             playerCollision();
 
-            DrawObjects();
+//            DrawObjects();
+            
+            
+            colorText('Well Dam',50,50,'20px Arial','red');
 
-
+            } else {
+                colorRect(0, 0, canvas.width, canvas.height, 'black');
+                colorText('Well Dam',50,50,'20px Arial','red');
+            }
 
         }
+            
 
         //Object Vars
         var obstacle = new Image();
@@ -88,6 +96,14 @@
 
 
         }
+        
+        // End Screen
+        function colorText(msg,x,y,f,c){
+            canvasContext.fillStyle = c;
+            canvasContext.font = f;
+            canvasContext.fillText(msg,x,y);
+          
+        }// End Func
 
 
 
@@ -152,7 +168,7 @@
 
 
 
-
+        
 
         function playerMove() { //Player Movement
             if (falling) {
@@ -197,6 +213,7 @@
             }
             if (evt.keyCode == RIGHT_KEY) {
                 rightKeyPressed = false;
+                gameRun = false;
             }
             if (evt.keyCode == UP_KEY) {
                 upKeyPressed = false;
