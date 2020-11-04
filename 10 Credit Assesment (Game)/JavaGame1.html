@@ -47,7 +47,15 @@
         const RIGHT_KEY = 39;
         var gameRun = true;
 
-        var startingPos = true;
+        //Object Vars
+        var obstacle = new Image();
+        obstacle.src = 'Images/1001519925.jpg'
+        var obstacleSize = 100;
+        var objXpos = 0;
+        var objYpos = 0;
+        var objects = [];
+        var settingUp = true;
+        var TotalObjects = 500;
 
 
 
@@ -57,7 +65,7 @@
                 colorRect(0, 0, canvas.width, canvas.height, 'white');
                 drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
                 drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
-                drawImgs(obstacle, objXpos, objYpos, obstaclewidth, obstacleheight);
+                drawImgs(obstacle, objXpos, objYpos, obstacleSize, obstacleSize);
 
 
 
@@ -65,201 +73,202 @@
 
                 playerCollision();
 
-                if (startingPos) {
-                    for (var i = 0; i < Totalobjects; i++) {
+                if (settingUp) {
+                    for (var i = 0; i < TotalObjects; i++) {
                         MakeObjects();
                     }
 
-
-                    }
-                        DrawObjects();
-
-                    startingPos = false;
-
-
-                    colorText('Well Dam', 50, 50, '20px Arial', 'red');
-
-                } else {
-                    colorRect(0, 0, canvas.width, canvas.height, 'black');
-                    colorText('Well Dam', 50, 50, '20px Arial', 'red');
+                    settingUp = false;
                 }
-
-            }
-
-
-            //Object Vars
-            var obstacle = new Image();
-            obstacle.src = 'Images/1001519925.jpg'
-            var obstacleheight = 100;
-            var obstaclewidth = 100;
-            var objXpos = 700;
-            var objYpos = 440;
-
-            var objects = [];
-            var settingUp = true;
-            var Totalobjects = 15;
-
-            //Array of Objects
-            function MakeObjects() {
-                //            var objPos = Math.floor(Math.random() * 6) + 1;
-                var obstacleSize = 40;
-                var objXpos = Math.floor(Math.random() * (canvas.width - obstacleSize)) + obstacleSize;
-                var objYpos = Math.floor(Math.random() * (canvas.height - obstacleSize)) + obstacleSize;
-
-                var Object = {
-                    objXpos: objXpos,
-                    objYpos: objYpos,
-                    obstacleSize: obstacleSize
-                }
-
-                objects.push(Object);
-
-            }
-            // Drawing Objects
-            function DrawObjects() {
-                objects.forEach(function(object, i) {
-                    drawImgs(obstacle, obstacle.objXpos, obstacle.objYpos, obstacle.obstaclewidth, obstacle.obstacleheight);
-
-                });
-            }
-
-            // End Screen
-            function colorText(msg, x, y, f, c) {
-                canvasContext.fillStyle = c;
-                canvasContext.font = f;
-                canvasContext.fillText(msg, x, y);
-
-            } // End Func
+               
 
 
+                colorText('Well Dam', 50, 50, '20px Arial', 'red');
 
-
-            // Object Collision
-            var falling = true;
-
-            function playerCollision() {
-                if (playerYpos + PLAYER_SIZE > objYpos && playerYpos < objYpos + obstacleheight && playerXpos + PLAYER_SIZE > objXpos && playerXpos < objXpos + obstaclewidth) {
-                    falling = false;
-
-                    if (playerYpos + PLAYER_SIZE > objYpos) {
-                        playerYpos -= playerYspeed;
-                        falling = false;
-                    } // Top Edge bix hit
-
-                    if (playerYpos < objYpos + obstacleheight && playerYpos + PLAYER_SIZE > objYpos) {
-                        playerYpos += playerXspeed * 2;
-                        falling = true;
-                    } // Bottem edge box hit
-
-                    if (playerXpos > objXpos + obstaclewidth * 0.75) {
-                        playerXpos += playerXspeed * 2;
-                        falling = true;
-                    } // right edge box hit
-
-                    if (playerXpos < objXpos - obstaclewidth * 0.75) {
-                        playerXpos -= playerXspeed * 2;
-                        falling = true;
-                    } // right edge box hit
-
-                } else {
-                    falling = true;
-                }
-
-            } // End Func
-
-            // UserName/Difficulty
-            var userName = '';
-
-            while (userName == '' || userName == null) {
-                userName = prompt('What is you name?');
-            }
-
-            var difficulty = '';
-            while (difficulty == 'easy' || difficulty == null) {
-                difficulty = prompt('How hard?', 'Easy');
-            }
-
-            difficulty = Number(difficulty) //makes it number
-            var gameSpeed = 0;
-
-            if (difficulty == 'Easy') {
-                gameSpeed = 2
             } else {
-                gameSpeed = 100;
+                colorRect(0, 0, canvas.width, canvas.height, 'black');
+                colorText('Well Dam', 50, 50, '20px Arial', 'red');
+            }
+             DrawObjects();
+
+        }
+
+
+
+
+        //Array of Objects
+        function  MakeObjects() {
+            var obstaclesize = Math.floor(Math.random() * (100 - 10)) + 10;
+            var objXpos = Math.floor(Math.random() * (canvas.width - obstacleSize)) + obstacleSize;
+            var objYpos = Math.floor(Math.random() * (canvas.height - obstacleSize)) + obstacleSize;
+            var objXpos = Math.floor(Math.random() * ((canvas.width - objYpos) - 4)) + 1;
+            var objYpos = Math.floor(Math.random() * ((canvas.height - objXpos) - 4)) + 1;
+
+
+            var Object = {
+                objXpos: objXpos,
+                objYpos: objYpos,
+                obstacleSize: obstacleSize,
             }
 
 
 
+    
+            objects.push(Object);
+
+        }
+        // Drawing Objects
+        function DrawObjects() {
+            objects.forEach(function(object, i) {
+                drawImgs(obstacle, obstacle.objXpos, obstacle.objYpos, obstacle.obstacleSize, obstacle.obstacleSize);
+
+            });
+
+        }
+
+        function RandomObjects() {
+            Math.random() * canvas.width
+        };
+
+
+
+        // End Screen
+        function colorText(msg, x, y, f, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.font = f;
+            canvasContext.fillText(msg, x, y);
+
+        } // End Func
+
+
+
+
+        // Object Collision
+        var falling = true;
+
+        function playerCollision() {
+            if (playerYpos + PLAYER_SIZE > objYpos && playerYpos < objYpos + obstacleSize && playerXpos + PLAYER_SIZE > objXpos && playerXpos < objXpos + obstacleSize) {
+                falling = false;
+
+                if (playerYpos + PLAYER_SIZE > objYpos) {
+                    playerYpos -= playerYspeed;
+                    falling = false;
+                } // Top Edge bix hit
+
+                if (playerYpos < objYpos + obstacleSize && playerYpos + PLAYER_SIZE > objYpos) {
+                    playerYpos += playerXspeed * 2;
+                    falling = true;
+                } // Bottem edge box hit
+
+                if (playerXpos > objXpos + obstacleSize * 0.75) {
+                    playerXpos += playerXspeed * 2;
+                    falling = true;
+                } // right edge box hit
+
+                if (playerXpos < objXpos - obstacleSize * 0.75) {
+                    playerXpos -= playerXspeed * 2;
+                    falling = true;
+                } // right edge box hit
+
+            } else {
+                falling = true;
+            }
+
+        } // End Func
+
+        // UserName/Difficulty
+        var userName = '';
+
+        while (userName == '' || userName == null) {
+            userName = prompt('What is you name?');
+        }
+
+        var difficulty = '';
+        while (difficulty == 'easy' || difficulty == null) {
+            difficulty = prompt('How hard?', 'Easy');
+        }
+
+        difficulty = Number(difficulty) //makes it number
+        var gameSpeed = 0;
+
+        if (difficulty == 'Easy') {
+            gameSpeed = 2
+        } else {
+            gameSpeed = 100;
+        }
 
 
 
 
 
-            function playerMove() { //Player Movement
-                if (falling) {
-                    playerYpos += playerYspeed;
-                    playerYspeed += yVel;
-                } else {
-                    playerYspeed = 0;
-                }
-                if (rightKeyPressed && playerXpos + PLAYER_SIZE < canvas.width) {
-                    playerXpos += playerXspeed;
-                }
-                if (rightKeyPressed == true) {
-                    playerXpos += playerXspeed;
-                }
-                if (leftKeyPressed == true) {
-                    playerXpos -= playerXspeed;
-                }
-                if (upKeyPressed == true) {
-                    playerYspeed = yJumpPower;
-                }
-
-
-            } //End Func
-
-            function keyPressed(evt) { //Controls
-                if (evt.keyCode == LEFT_KEY) {
-                    leftKeyPressed = true;
-                }
-                if (evt.keyCode == RIGHT_KEY) {
-                    rightKeyPressed = true;
-                }
-                if (evt.keyCode == UP_KEY) {
-                    upKeyPressed = true;
-                }
-
-
-            } //End Func
-
-            function keyReleased(evt) { //ControlsS
-                if (evt.keyCode == LEFT_KEY) {
-                    leftKeyPressed = false;
-                }
-                if (evt.keyCode == RIGHT_KEY) {
-                    rightKeyPressed = false;
-                    gameRun = false;
-                }
-                if (evt.keyCode == UP_KEY) {
-                    upKeyPressed = false;
-                }
-
-
-            } //End Func
 
 
 
+        function playerMove() { //Player Movement
+            if (falling) {
+                playerYpos += playerYspeed;
+                playerYspeed += yVel;
+            } else {
+                playerYspeed = 0;
+            }
+            if (rightKeyPressed && playerXpos + PLAYER_SIZE < canvas.width) {
+                playerXpos += playerXspeed;
+            }
+            if (rightKeyPressed == true) {
+                playerXpos += playerXspeed;
+            }
+            if (leftKeyPressed == true) {
+                playerXpos -= playerXspeed;
+            }
+            if (upKeyPressed == true) {
+                playerYspeed = yJumpPower;
+            }
 
 
-            function drawImgs(src, x, y, w, h) {
-                canvasContext.drawImage(src, x, y, w, h);
-            } //End Func
+        } //End Func
+
+        function keyPressed(evt) { //Controls
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = true;
+            }
+            if (evt.keyCode == RIGHT_KEY) {
+                rightKeyPressed = true;
+            }
+            if (evt.keyCode == UP_KEY) {
+                upKeyPressed = true;
+            }
 
 
-            function colorRect(x, y, w, h, c) {
-                canvasContext.fillStyle = c;
-                canvasContext.fillRect(x, y, w, h);
-            } //End Func
+        } //End Func
+
+        function keyReleased(evt) { //ControlsS
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = false;
+            }
+            if (evt.keyCode == RIGHT_KEY) {
+                rightKeyPressed = false;
+                //gameRun = false;
+            }
+            if (evt.keyCode == UP_KEY) {
+                upKeyPressed = false;
+            }
+
+
+        } //End Func
+
+
+
+
+
+        function drawImgs(src, x, y, w, h) {
+            canvasContext.drawImage(src, x, y, w, h);
+        } //End Func
+
+
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+        } //End Func
 
     </script>
 </body>
