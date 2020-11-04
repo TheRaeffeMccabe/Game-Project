@@ -2,7 +2,7 @@
 
 <body>
 
-    <canvas id="gameCanvas" width="1880" height="950"></canvas>
+    <canvas id="gameCanvas" width="1000" height="800"></canvas>
 
 
 
@@ -49,13 +49,13 @@
 
         //Object Vars
         var obstacle = new Image();
-        obstacle.src = 'Images/1001519925.jpg'
+        obstacle.src = 'Images/1001519925.jpg';
         var obstacleSize = 100;
         var objXpos = 0;
         var objYpos = 0;
         var objects = [];
         var settingUp = true;
-        var TotalObjects = 500;
+        var TotalObjects = 10;
 
 
 
@@ -83,11 +83,11 @@
                
 
 
-                colorText('Well Dam', 50, 50, '20px Arial', 'red');
+            
 
             } else {
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
-                colorText('Well Dam', 50, 50, '20px Arial', 'red');
+                colorText('Well Dam', 400, 500, '20px Arial', 'red');
             }
              DrawObjects();
 
@@ -108,19 +108,16 @@
             var Object = {
                 objXpos: objXpos,
                 objYpos: objYpos,
-                obstacleSize: obstacleSize,
+                obstacleSize: obstacleSize
             }
-
-
-
     
             objects.push(Object);
 
         }
         // Drawing Objects
         function DrawObjects() {
-            objects.forEach(function(object, i) {
-                drawImgs(obstacle, obstacle.objXpos, obstacle.objYpos, obstacle.obstacleSize, obstacle.obstacleSize);
+            objects.forEach(function(obj, i, array) {
+                drawImgs(obstacle, obj.objXpos, obj.objYpos, obj.obstacleSize, obj.obstacleSize);
 
             });
 
@@ -173,6 +170,12 @@
             } else {
                 falling = true;
             }
+            
+            if (playerYpos + PLAYER_SIZE > backgroundheight && playerXpos + PLAYER_SIZE > backgroundwidth) {
+               gameRun = false;
+            }
+            
+            
 
         } // End Func
 
@@ -193,7 +196,10 @@
 
         if (difficulty == 'Easy') {
             gameSpeed = 2
-        } else {
+        } 
+        
+        
+        else {
             gameSpeed = 100;
         }
 
@@ -227,7 +233,7 @@
 
         } //End Func
 
-        function keyPressed(evt) { //Controls
+        function keyPressed(evt) { // Controls
             if (evt.keyCode == LEFT_KEY) {
                 leftKeyPressed = true;
             }
@@ -241,13 +247,12 @@
 
         } //End Func
 
-        function keyReleased(evt) { //ControlsS
+        function keyReleased(evt) { // Controls
             if (evt.keyCode == LEFT_KEY) {
                 leftKeyPressed = false;
             }
             if (evt.keyCode == RIGHT_KEY) {
                 rightKeyPressed = false;
-                //gameRun = false;
             }
             if (evt.keyCode == UP_KEY) {
                 upKeyPressed = false;
