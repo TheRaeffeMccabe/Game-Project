@@ -2,7 +2,7 @@
 
 <body>
 
-    <canvas id="gameCanvas" width="1000" height="800"></canvas>
+    <canvas id="gameCanvas" width="1800" height="1000"></canvas>
 
 
 
@@ -19,7 +19,14 @@
 
             setInterval(mainloop, 1000 / 50);
         }
-
+        
+        //H1 Vars
+        var H1 = new Image();
+        H1.scr = 'Background Images/Trophy.jpg';
+        var H1Xpos = 500;
+        var H1Ypos = 500;
+        var H1Width = 100;
+        var H1height = 100;
 
         // player Vars
         var player = new Image();
@@ -31,6 +38,8 @@
         var yJumpPower = -7;
         var playerXspeed = 5;
         var playerYspeed = 5;
+        
+        // Background Vars
         var backgroundwidth = 2000;
         var backgroundheight = 900;
         var background = new Image();
@@ -51,11 +60,12 @@
         var obstacle = new Image();
         obstacle.src = 'Images/1001519925.jpg';
         var obstacleSize = 100;
-        var objXpos = 100;
+        var objXpos = 10000;
         var objYpos = 700;
         var objects = [];
         var settingUp = true;
         var TotalObjects = 5;
+        
 
 
 
@@ -66,7 +76,7 @@
                 drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
                 drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
                 drawImgs(obstacle, objXpos, objYpos, obstacleSize, obstacleSize);
-
+                drawImgs(H1, 100, 100, H1Width, H1height);
 
 
                 playerMove();
@@ -87,7 +97,7 @@
 
             } else {
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
-                colorText('Well Dam', 400, 500, '20px Arial', 'red');
+                colorText('Well Dam', 600, 500, '20px Arial', 'White');
             }
              DrawObjects();
 
@@ -98,7 +108,7 @@
 
         //Array of Objects
         function  MakeObjects() {
-            var obstaclesize = Math.floor(Math.random() * (1000 - 10)) + 10;
+            var obstaclesize = Math.floor(Math.random() * (1000 - 10)) + 100;
             var objXpos = Math.floor(Math.random() * (canvas.width - obstacleSize)) + obstacleSize;
             var objYpos = Math.floor(Math.random() * (canvas.height - obstacleSize)) + obstacleSize;
             var objXpos = Math.floor(Math.random() * ((canvas.width - objYpos) - 1)) + 1;
@@ -180,6 +190,8 @@
             // Death
             if (playerYpos + PLAYER_SIZE > canvas.width && playerXpos + PLAYER_SIZE < canvas.height) {
                gameRun = false;
+        
+               
             }
             
             
@@ -204,15 +216,15 @@
         
         var gameSpeed = 0; // Easy Difficulty
         if (difficulty == 'Easy'){
-            TotalObjects = 5;
+            TotalObjects = 10;
         }
         var gameSpeed = 0;// Medium Difficulty
         if (difficulty == 'Medium'){
-            TotalObjects = 3;
+            TotalObjects = 7;
         }
         var gameSpeed = 0;// Hard Difficulty
         if (difficulty == 'Hard'){
-            TotalObjects = 1;
+            TotalObjects = 4;
         }
 
       
