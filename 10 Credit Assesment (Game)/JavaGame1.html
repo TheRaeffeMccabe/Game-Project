@@ -21,12 +21,13 @@
         }
         
         //H1 Vars
-        var H1 = new Image();
-        H1.scr = 'Background Images/Trophy.jpg';
-        var H1Xpos = 500;
-        var H1Ypos = 500;
-        var H1Width = 100;
-        var H1height = 100;
+        var H = new Image();
+        H.src = 'Background Images/The H.png';
+        var HXpos = 1200;
+        var HYpos = 500;
+        var HWidth = 500;
+        var HHeight = 500;
+    
 
         // player Vars
         var player = new Image();
@@ -34,7 +35,7 @@
         var playerXpos = 100;
         var playerYpos = 0;
         const PLAYER_SIZE = 100;
-        var yVel = .5;
+        var yVel = 1;
         var yJumpPower = -7;
         var playerXspeed = 5;
         var playerYspeed = 5;
@@ -50,7 +51,6 @@
         var leftKeyPressed = false;
         var rightKeyPressed = false;
         var upKeyPressed = false;
-
         const LEFT_KEY = 37;
         const UP_KEY = 38
         const RIGHT_KEY = 39;
@@ -65,6 +65,7 @@
         var objects = [];
         var settingUp = true;
         var TotalObjects = 5;
+        var Win = true;
         
 
 
@@ -76,7 +77,9 @@
                 drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
                 drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
                 drawImgs(obstacle, objXpos, objYpos, obstacleSize, obstacleSize);
-                drawImgs(H1, 100, 100, H1Width, H1height);
+                drawImgs(H, HXpos, HYpos, HWidth, HHeight);
+                
+                
 
 
                 playerMove();
@@ -90,6 +93,14 @@
 
                     settingUp = false;
                 }
+                
+                if (Win = false){
+                    colorRect(0, 0, canvas.width, canvas.height, 'black');
+                colorText('oH Yeah', 600, 500, '100px Arial', 'White');
+                    
+                    
+                }
+                
                
 
 
@@ -97,7 +108,7 @@
 
             } else {
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
-                colorText('Well Dam', 600, 500, '20px Arial', 'White');
+                colorText('Well Dam', 600, 500, '100px Arial', 'White');
             }
              DrawObjects();
 
@@ -190,6 +201,10 @@
             // Death
             if (playerYpos + PLAYER_SIZE > canvas.width && playerXpos + PLAYER_SIZE < canvas.height) {
                gameRun = false;
+            
+            if (playerXpos + PLAYER_SIZE < HHeight && playerYpos + PLAYER_SIZE < HWidth){
+                Win = false;
+            }
         
                
             }
