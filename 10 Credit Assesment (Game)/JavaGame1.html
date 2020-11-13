@@ -25,8 +25,8 @@
         H.src = 'Background Images/The H.png';
         var HXpos = 1200;
         var HYpos = 500;
-        var HWidth = 500;
-        var HHeight = 500;
+        var HSize = 200;
+        
     
 
         // player Vars
@@ -65,54 +65,55 @@
         var objects = [];
         var settingUp = true;
         var TotalObjects = 5;
-        var Win = true;
+        
         
 
 
 
-
+        // Mainloop
         function mainloop() {
             if (gameRun) {
                 colorRect(0, 0, canvas.width, canvas.height, 'white');
                 drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
                 drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
                 drawImgs(obstacle, objXpos, objYpos, obstacleSize, obstacleSize);
-                drawImgs(H, HXpos, HYpos, HWidth, HHeight);
+                drawImgs(H, HXpos, HYpos, HSize, HSize);
                 
                 
 
 
                 playerMove();
+                DrawObjects();
 
-//                playerCollision();
+
 
                 if (settingUp) {
                     for (var i = 0; i < TotalObjects; i++) {
-                        MakeObjects();
+                    MakeObjects();
                     }
 
                     settingUp = false;
                 }
                 
-                if (Win = false){
-                    colorRect(0, 0, canvas.width, canvas.height, 'black');
-                colorText('oH Yeah', 600, 500, '100px Arial', 'White');
-                    
-                    
-                }
                 
                
 
 
-            
-
+                
+            // Death Screen
             } else {
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
-                colorText('Well Dam', 600, 500, '100px Arial', 'White');
+                colorText('Nice try', 600, 500, '100px Arial', 'White');
+                colorText(userName, 600, 600, '70px Arial', 'White');
+                
+                
             }
-             DrawObjects();
-
-        }
+            
+            
+             
+            
+                   
+            }// End of Mainloop
 
 
 
@@ -146,7 +147,7 @@
 
         function RandomObjects() {
             Math.random() * canvas.width
-        };
+        };// End Func
 
 
 
@@ -177,7 +178,7 @@
                 } // Top Edge bix hit
 
                 if (playerYpos < obj.objYpos + obj.obstacleSize && playerYpos + PLAYER_SIZE > obj.objYpos) {
-                    playerYpos += playerXspeed * 1;
+                    playerYpos += playerXspeed * 0.1;
                     falling = true;
                 } // Bottem edge box hit
 
@@ -189,24 +190,22 @@
                 if (playerXpos < obj.objXpos - obj.obstacleSize * 0.75) {
                     playerXpos -= playerXspeed * 1;
                     falling = true;
-                    // right edge box hit
+                  // right edge box hit
                 
                 }
             }
              else {
                 falling = true;
             }
-            });
+            });// End of Array Collisions
 
             // Death
             if (playerYpos + PLAYER_SIZE > canvas.width && playerXpos + PLAYER_SIZE < canvas.height) {
-               gameRun = false;
-            
-            if (playerXpos + PLAYER_SIZE < HHeight && playerYpos + PLAYER_SIZE < HWidth){
-                Win = false;
+               gameRun = false;  
             }
-        
-               
+            // Win
+            if (playerYpos + PLAYER_SIZE > HSize && playerYpos < HSize +  HSize && playerXpos + PLAYER_SIZE >  HSize && playerXpos <  HSize +  HSize){
+                console.log('Omega')
             }
             
             
@@ -223,33 +222,27 @@
         var difficulty = 'Easy';
         var pass = false;
         while (pass == false){
-            difficulty = prompt('How Hard? easy, medium or hard?', 'Easy'); // Difficulty
-            if (difficulty == 'Easy' || difficulty == 'Medium' || difficulty == 'Hard'){
-                pass = true;
-            }
+            
+        difficulty = prompt('How Hard? easy, medium or hard?', 'Easy'); // Difficulty
+        if (difficulty == 'Easy' || difficulty == 'Medium' || difficulty == 'Hard'){
+        pass = true;
+        }
         }
         
         var gameSpeed = 0; // Easy Difficulty
         if (difficulty == 'Easy'){
-            TotalObjects = 10;
+            TotalObjects = 5;
         }
         var gameSpeed = 0;// Medium Difficulty
         if (difficulty == 'Medium'){
-            TotalObjects = 7;
+            TotalObjects = 3;
         }
         var gameSpeed = 0;// Hard Difficulty
         if (difficulty == 'Hard'){
-            TotalObjects = 4;
+            TotalObjects = 2;
         }
 
       
-
-
-
-
-
-
-
 
         function playerMove() { //Player Movement
             if (falling) {
@@ -310,7 +303,7 @@
 
 
 
-
+        
         function drawImgs(src, x, y, w, h) {
             canvasContext.drawImage(src, x, y, w, h);
         } //End Func
