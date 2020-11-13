@@ -23,16 +23,17 @@
         //H1 Vars
         var H = new Image();
         H.src = 'Background Images/The H.png';
-        var HXpos = 1200;
-        var HYpos = 500;
-        var HSize = 200;
+        var HXpos = 1;
+        var HYpos = 100;
+        var HWidth = 300;
+        var HHeight = 300;
         
     
 
         // player Vars
         var player = new Image();
         player.src = 'Player/Ricardio_the_Heart_Guy.png';
-        var playerXpos = 100;
+        var playerXpos = 1300;
         var playerYpos = 0;
         const PLAYER_SIZE = 100;
         var yVel = 1;
@@ -65,6 +66,7 @@
         var objects = [];
         var settingUp = true;
         var TotalObjects = 5;
+        var Winner = false;
         
         
 
@@ -77,7 +79,7 @@
                 drawImgs(background, 0, 0, backgroundwidth, backgroundheight);
                 drawImgs(player, playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE);
                 drawImgs(obstacle, objXpos, objYpos, obstacleSize, obstacleSize);
-                drawImgs(H, HXpos, HYpos, HSize, HSize);
+                drawImgs(H, HXpos, HYpos, HWidth, HHeight);
                 
                 
 
@@ -104,8 +106,12 @@
             } else {
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
                 colorText('Nice try', 600, 500, '100px Arial', 'White');
-                colorText(userName, 600, 600, '70px Arial', 'White');
-                
+                colorText(userName, 600, 600, '70px Arial', 'White');   
+            }
+            if (Winner){
+                colorRect(0, 0, canvas.width, canvas.height, 'white');
+                colorText('Congrats', 600, 500, '100px Arial', 'black');
+                colorText(userName, 600, 600, '70px Arial', 'black');
                 
             }
             
@@ -133,7 +139,7 @@
                 obstacleSize: obstacleSize
             }
     
-            objects.push(Object);
+            objects.push(Object);// pushes into array
 
         }
         // Drawing Objects
@@ -204,8 +210,8 @@
                gameRun = false;  
             }
             // Win
-            if (playerYpos + PLAYER_SIZE > HSize && playerYpos < HSize +  HSize && playerXpos + PLAYER_SIZE >  HSize && playerXpos <  HSize +  HSize){
-                console.log('Omega')
+            if (playerYpos + PLAYER_SIZE > HWidth && playerXpos + PLAYER_SIZE < HHeight){
+                 Winner = true;
             }
             
             
@@ -231,15 +237,15 @@
         
         var gameSpeed = 0; // Easy Difficulty
         if (difficulty == 'Easy'){
-            TotalObjects = 5;
+            TotalObjects = 10;
         }
         var gameSpeed = 0;// Medium Difficulty
         if (difficulty == 'Medium'){
-            TotalObjects = 3;
+            TotalObjects = 15;
         }
         var gameSpeed = 0;// Hard Difficulty
         if (difficulty == 'Hard'){
-            TotalObjects = 2;
+            TotalObjects = 25;
         }
 
       
